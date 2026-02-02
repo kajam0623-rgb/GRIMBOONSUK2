@@ -119,7 +119,7 @@ with col2:
             if st.button("📖 주제 텍스트 추출", key="extract_btn"):
                 with st.spinner("🔍 이미지에서 주제를 읽는 중..."):
                     try:
-                        ocr_model = genai.GenerativeModel(model_name="gemini-2.5-flash")
+                        ocr_model = genai.GenerativeModel(model_name="gemini-1.5-flash")
                         subject_bytes = subject_image.getvalue()
                         ocr_response = ocr_model.generate_content([
                             "이 이미지에 적힌 실기 주제 또는 지문 내용을 정확하게 추출해서 텍스트로 알려줘. 다른 설명 없이 주제 내용만 출력해.",
@@ -149,7 +149,7 @@ if st.button("🔍 분석 시작", type="primary", use_container_width=True):
                 
                 # Gemini Vision 모델 호출
                 model = genai.GenerativeModel(
-                    model_name="gemini-2.5-flash",
+                    model_name="gemini-1.5-flash",
                     system_instruction=system_instruction
                 )
                 
