@@ -12,8 +12,25 @@ from dotenv import load_dotenv
 # ==========================================
 # 1. 설정
 # ==========================================
-load_dotenv()
-API_KEY = os.getenv("GEMINI_API_KEY")
+# API 키 로드 (Streamlit Cloud vs Local)
+try:
+    # 1. Streamlit Cloud Secrets 시도
+    if "GEMINI_API_KEY" in st.secrets:
+        API_KEY = st.secrets["GEMINI_API_KEY"]
+    else:
+        # 2. Local .env 시도
+        load_dotenv()
+        API_KEY = os.getenv("GEMINI_API_KEY")
+except Exception:
+    # 예외 발생 시 .env 시도
+    load_dotenv()
+    API_KEY = os.getenv("GEMINI_API_KEY")
+
+# 키 확인
+if not API_KEY:
+    st.error("🚨 API Key가 설정되지 않았습니다! (Settings > Secrets를 확인하세요)")
+    st.stop()
+
 genai.configure(api_key=API_KEY)
 
 # ==========================================
